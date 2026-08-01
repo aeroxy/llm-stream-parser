@@ -20,7 +20,7 @@ manual override in the UI if detection guesses wrong:
 | **Anthropic Messages** | Named SSE events — `message_start`, `content_block_delta` (`text_delta` / `thinking_delta` / `input_json_delta`), `message_delta`, `message_stop` |
 | **OpenAI Responses API** | `data:` payloads with a self-describing `type`, e.g. `response.output_text.delta`, `response.function_call_arguments.delta`, `response.completed` |
 | **OpenAI Chat Completions** | `data: {"choices":[{"delta":{...}}]}` chunks, terminated by `data: [DONE]` |
-| **Gemini / Vertex AI** | `{"candidates":[...]}`, optionally wrapped in `{"response": {...}}` (the shape Google's internal Cloud Code Assist / `gemini-cli` surface sends — see `refs/example`) |
+| **Gemini / Vertex AI** | `{"candidates":[...]}`, optionally wrapped in `{"response": {...}}` (the shape Google's internal Cloud Code Assist / `gemini-cli` surface sends) |
 | **Raw / unrecognized** | Always matches last. Tries whole-input JSON, then NDJSON, then falls back to showing the pasted text verbatim — the app never hard-fails on unknown input. |
 
 Each format is one adapter under `src/lib/adapters/`, implementing:
@@ -45,8 +45,9 @@ bun install
 bun run dev       # http://localhost:5173
 ```
 
-Click **Load example** to try it against the bundled Gemini/Vertex fixture
-(`refs/example`), or paste/upload your own stream dump.
+Click **Load example** to try it against a small hand-rolled, synthetic
+Gemini-shaped fixture (`src/lib/exampleFixture.ts` — made-up content, not
+real captured traffic), or paste/upload your own stream dump.
 
 ## Scripts
 

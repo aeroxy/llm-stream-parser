@@ -1,18 +1,14 @@
 import { describe, expect, test } from 'bun:test';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { detectAndParse } from './index';
-
-const geminiExample = readFileSync(join(import.meta.dir, '../../../refs/example'), 'utf8');
 
 function sse(events: unknown[]): string {
   return events.map((e) => `data: ${JSON.stringify(e)}\n\n`).join('');
 }
 
 describe('detectAndParse', () => {
-  test('routes the Gemini fixture to the gemini adapter', () => {
-    const { adapter } = detectAndParse(geminiExample);
-    expect(adapter.id).toBe('gemini');
+  test('routes Gemini-shaped candidates to the gemini adapter', () => {
+    const input = sse([{ response: { candidates: [{ content: { parts: [{ text: 'hi' }] } }] } }]);
+    expect(detectAndParse(input).adapter.id).toBe('gemini');
   });
 
   test('routes Chat Completions chunks to openai-chat', () => {

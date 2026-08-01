@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import exampleRaw from '../refs/example?raw';
 import { ADAPTERS, detectAndParse, getAdapter, type ParsedStream, type Provider } from '@/lib/adapters';
+import { EXAMPLE_FIXTURE } from '@/lib/exampleFixture';
 import { Eyebrow } from '@/components/Card';
 import { InputPane } from '@/components/InputPane';
 import { ReconstructedView } from '@/components/ReconstructedView';
@@ -34,7 +34,7 @@ export default function App() {
   }
 
   function handleLoadExample() {
-    setInput(exampleRaw);
+    setInput(EXAMPLE_FIXTURE);
     setOverride('auto');
   }
 
