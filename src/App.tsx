@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { ADAPTERS, detectAndParse, getAdapter, type ParsedStream, type Provider } from '@/lib/adapters';
+import { trackParse } from '@/lib/analytics';
 import { EXAMPLE_FIXTURE } from '@/lib/exampleFixture';
 import { Eyebrow } from '@/components/Card';
 import { InputPane } from '@/components/InputPane';
@@ -23,14 +24,22 @@ export default function App() {
   const [tab, setTab] = useState<Tab>('reconstructed');
 
   function handleParse() {
-    if (override === 'auto') {
-      const { adapter, result } = detectAndParse(input);
-      setParsed({ adapterLabel: adapter.label, result });
-    } else {
-      const adapter = getAdapter(override);
-      setParsed({ adapterLabel: adapter.label, result: adapter.parse(input) });
+    try {
+      if (override === 'auto') {
+        const { adapter, result } = detectAndParse(input);
+        setParsed({ adapterLabel: adapter.label, result });
+        trackParse(result.provider);
+      } else {
+        const adapter = getAdapter(override);
+        const result = adapter.parse(input);
+        setParsed({ adapterLabel: adapter.label, result });
+        trackParse(result.provider);
+      }
+      setTab('reconstructed');
+    } catch (err) {
+      trackParse('failed');
+      throw err;
     }
-    setTab('reconstructed');
   }
 
   function handleLoadExample() {
