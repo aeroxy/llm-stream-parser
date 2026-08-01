@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================
+   design tokens — copied from aero-oops-wtf/frontend/src/index.css
+
+   Two accent roles, not interchangeable:
+     action (orange) — things you can click
+     status (blue)   — things that are true
+   ============================================================= */
+
+:root {
+  --aero-ink:         oklch(0.150 0      0);       /* #0B0B0B */
+  --aero-ink-700:     oklch(0.270 0.0073 285.9);   /* #26262A */
+  --aero-ink-500:     oklch(0.442 0.0146 285.8);   /* #52525B */
+  --aero-ink-300:     oklch(0.712 0.0129 286.1);   /* #A1A1AA */
+
+  --aero-action:      oklch(0.623 0.1683 38.3);    /* #D85A30 */
+  --aero-action-700:  oklch(0.572 0.1579 38.2);    /* #C24E27 */
+  --aero-action-300:  oklch(0.790 0.0881 41);      /* #ECA88F */
+  --aero-action-soft: oklch(0.971 0.0121 43.3);    /* #FDF3EF */
+
+  --aero-status:      oklch(0.560 0.1975 262.2);   /* #2E6BE6 */
+  --aero-status-700:  oklch(0.441 0.1542 261.7);   /* #1D4CA6 */
+  --aero-status-300:  oklch(0.790 0.093  264.7);   /* #9DBAF7 */
+  --aero-status-soft: oklch(0.966 0.0144 264.5);   /* #EFF4FE */
+
+  --neutral-0:       oklch(1.000 0      0);        /* #FFFFFF */
+  --neutral-50:      oklch(0.985 0      0);        /* #FAFAFA */
+  --neutral-100:     oklch(0.967 0.0013 286.4);    /* #F4F4F5 */
+  --neutral-200:     oklch(0.920 0.004  286.3);    /* #E4E4E7 */
+  --neutral-300:     oklch(0.871 0.0055 286.3);    /* #D4D4D8 */
+  --neutral-400:     oklch(0.712 0.0129 286.1);    /* #A1A1AA */
+  --neutral-500:     oklch(0.552 0.0138 285.9);    /* #71717A */
+  --neutral-600:     oklch(0.442 0.0146 285.8);    /* #52525B */
+  --neutral-700:     oklch(0.370 0.0119 285.8);    /* #3F3F46 */
+
+  --no:              oklch(0.577 0.2152 27.3);     /* #DC2626 */
+  --no-strong:       oklch(0.505 0.1905 27.5);     /* #B91C1C */
+  --no-soft:         oklch(0.971 0.0129 17.4);     /* #FEF2F2 */
+
+  --warning:         oklch(0.666 0.1574 58.3);     /* #D97706 */
+  --info:            var(--aero-status);
+  --success:         var(--aero-status);
+
+  --background:      oklch(0.990 0.0039 106.5);    /* #FCFCF9 warm paper */
+  --surface:         var(--neutral-0);
+  --surface-sunken:  oklch(0.985 0.0026 106.4);    /* #FAFAF8 */
+  --surface-muted:   var(--neutral-100);
+
+  --fg-1:            var(--aero-ink);
+  --fg-2:            var(--neutral-600);
+  --fg-3:            var(--neutral-500);
+
+  --border:          var(--neutral-200);
+  --border-strong:   var(--neutral-300);
+
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Roboto Mono", Menlo, Consolas, monospace;
+
+  --r-xs: 6px;  --r-sm: 8px;  --r-md: 10px;  --r-lg: 16px;  --r-xl: 24px;
+
+  --shadow-xs: 0 1px 1px oklch(0.145 0 0 / 0.04);
+  --shadow-sm: 0 1px 0 0 oklch(0.145 0 0 / 0.04),
+               0 2px 6px  oklch(0.145 0 0 / 0.05);
+  --shadow-md: 0 1px 0 0 oklch(0.145 0 0 / 0.04),
+               0 12px 24px -12px oklch(0.145 0 0 / 0.10);
+  --shadow-lg: 0 1px 0 0 oklch(0.145 0 0 / 0.04),
+               0 24px 48px -24px oklch(0.145 0 0 / 0.14);
+  --shadow-focus: 0 0 0 3px oklch(0.623 0.1683 38.3 / 0.18);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fg-1);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.tabular,
+.font-mono,
+output, time, .num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "cv11";
+}
+
+/* Mono micro-label — "LLM STREAM PARSER", section numbers, table headers. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+/* Display heading — tight leading and negative tracking. */
+.display {
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+.dot-live {
+  background: var(--aero-status);
+  box-shadow: 0 0 0 3px oklch(0.560 0.1975 262.2 / 0.16);
+}
+.dot-idle {
+  background: var(--neutral-300);
+}
+
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--neutral-300) transparent;
+}
+.scroll-slim::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: var(--neutral-300);
+  border-radius: 999px;
+}
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-400);
+}
+
+/* CodeMirror find/replace panel — restyle its bare native inputs/buttons to
+   match the app's surfaces instead of default browser form-control chrome. */
+.cm-editor .cm-panel.cm-search {
+  padding: 8px 32px 8px 10px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--fg-2);
+  line-height: 1.8;
+}
+.cm-editor .cm-panel.cm-search .cm-textfield,
+.cm-editor .cm-panel.cm-search .cm-button {
+  vertical-align: middle;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.cm-editor .cm-panel.cm-search .cm-textfield {
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--fg-1);
+  outline: none;
+}
+.cm-editor .cm-panel.cm-search .cm-textfield:focus {
+  border-color: var(--aero-action);
+  box-shadow: var(--shadow-focus);
+}
+.cm-editor .cm-panel.cm-search .cm-button {
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface-muted);
+  color: var(--fg-1);
+  appearance: none;
+  cursor: pointer;
+}
+.cm-editor .cm-panel.cm-search .cm-button:hover {
+  background: var(--neutral-200);
+  border-color: var(--border-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
+}
