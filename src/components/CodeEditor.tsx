@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import CodeMirror, { type Extension, type ReactCodeMirrorProps } from '@uiw/react-codemirror';
+import CodeMirror, { EditorView, type Extension, type ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { githubLight } from '@uiw/codemirror-theme-github';
 import { cn } from '@/lib/cn';
@@ -23,7 +23,7 @@ export function CodeEditor({
   className?: string;
   height?: string;
 } & Omit<ReactCodeMirrorProps, 'value' | 'onChange' | 'height' | 'extensions'>) {
-  const extensions = useMemo<Extension[]>(() => [json()], []);
+  const extensions = useMemo<Extension[]>(() => [json(), EditorView.lineWrapping], []);
   return (
     <CodeMirror
       value={value}
