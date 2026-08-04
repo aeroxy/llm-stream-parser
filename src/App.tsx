@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ADAPTERS, detectAndParse, getAdapter, type ParsedStream, type Provider } from '@/lib/adapters';
 import { trackParse } from '@/lib/analytics';
 import { EXAMPLE_FIXTURE } from '@/lib/exampleFixture';
+import { addToHistory, loadHistory, type HistoryRecord } from '@/lib/history';
 import { Eyebrow } from '@/components/Card';
 import { InputPane } from '@/components/InputPane';
 import { ReconstructedView } from '@/components/ReconstructedView';
@@ -22,6 +23,7 @@ export default function App() {
   const [override, setOverride] = useState<Provider | 'auto'>('auto');
   const [parsed, setParsed] = useState<{ adapterLabel: string; result: ParsedStream } | null>(null);
   const [tab, setTab] = useState<Tab>('reconstructed');
+  const [history, setHistory] = useState<HistoryRecord[]>(() => loadHistory());
 
   function handleParse() {
     try {
@@ -35,6 +37,7 @@ export default function App() {
         setParsed({ adapterLabel: adapter.label, result });
         trackParse(result.provider);
       }
+      setHistory(addToHistory(input, override));
       setTab('reconstructed');
     } catch (err) {
       trackParse('failed');
@@ -45,6 +48,11 @@ export default function App() {
   function handleLoadExample() {
     setInput(EXAMPLE_FIXTURE);
     setOverride('auto');
+  }
+
+  function handleSelectHistory(record: HistoryRecord) {
+    setInput(record.raw);
+    setOverride(record.override);
   }
 
   return (
@@ -67,6 +75,8 @@ export default function App() {
             onLoadExample={handleLoadExample}
             override={override}
             onOverrideChange={setOverride}
+            history={history}
+            onSelectHistory={handleSelectHistory}
           />
         </div>
 
