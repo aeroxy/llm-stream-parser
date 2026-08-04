@@ -33,7 +33,9 @@ export function CodeEditor({
       theme={githubLight}
       height={height}
       basicSetup={{ foldGutter: true, autocompletion: !readOnly }}
-      className={cn('min-w-0 text-[12px]', className)}
+      // `height: 100%` on .cm-editor only resolves if this wrapper has a
+      // definite height — without it the editor grows to content and never scrolls.
+      className={cn('min-w-0 text-[12px]', height === '100%' && 'h-full', className)}
       {...rest}
     />
   );
